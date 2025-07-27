@@ -1,9 +1,9 @@
-import { Graphics } from "pixi.js";
-import { CreationEngine } from "../../engine/engine";
+import { Container, Graphics } from "pixi.js";
+import { COLOR } from "../colors/scheme";
 
-export function Fruit(engine: CreationEngine) {
+export function Fruit(parent: Container) {
   const graphics = new Graphics();
-  graphics.circle(40, 40, 20);
-  graphics.fill(0xd3249);
-  engine.stage.addChild(graphics);
+  graphics.circle(50, 50, 10);
+  graphics.fill(COLOR.FOOD);
+  parent.addChild(graphics);
 }
