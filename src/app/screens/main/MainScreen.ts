@@ -14,12 +14,13 @@ export class MainScreen extends Container {
   #pauseButton: FancyButton;
   public mainContainer: Container;
   #paused = false;
+  #snake: Snake;
 
   constructor() {
     super();
     this.mainContainer = new Container();
     this.addChild(this.mainContainer);
-    this.mainContainer.addChild(new Snake());
+    this.#snake = this.mainContainer.addChild(new Snake());
     this.mainContainer.addChild(new Fruit());
     this.#pauseButton = new FancyButton({
       text: new Text({
@@ -37,9 +38,10 @@ export class MainScreen extends Container {
   }
 
   /** Update the screen */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   public update(_time: Ticker) {
     if (this.#paused) return;
+    this.#snake.update(_time);
   }
 
   public async pause() {

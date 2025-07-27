@@ -1,29 +1,34 @@
-import { Container, Graphics } from "pixi.js";
+import { Container, Graphics, Ticker } from "pixi.js";
 import { registerKeyboardEvent } from "../../engine/keyboard/keyboard";
 import { COLOR } from "../colors/scheme";
 
+type Direction = "Up" | "Down" | "Left" | "Right";
 export class Snake extends Container {
+  #speed = 0;
+  #direction: Direction = "Right";
+  #graphic: Graphics;
   public constructor() {
     super();
-    const graphics = new Graphics();
-    graphics.rect(0, 0, 30, 30);
-    graphics.fill(COLOR.HEAD);
-    this.addChild(graphics);
-    const movementSpeed = graphics.width / 2;
+    this.#graphic = new Graphics();
+    this.#graphic.rect(0, 0, 30, 30);
+    this.#graphic.fill(COLOR.HEAD);
+    this.addChild(this.#graphic);
+    this.#speed = this.#graphic.width / 6;
     registerKeyboardEvent({
-      Up: () => {
-        graphics.y -= movementSpeed;
-      },
-      Left: () => {
-        graphics.x -= movementSpeed;
-      },
-      Right: () => {
-        console.log(graphics.x);
-        graphics.x += movementSpeed;
-      },
-      Down: () => {
-        graphics.y += movementSpeed;
-      },
+      Up: () => (this.#direction = "Up"),
+      Left: () => (this.#direction = "Left"),
+      Right: () => (this.#direction = "Right"),
+      Down: () => (this.#direction = "Down"),
     });
+  }
+
+  public update(time: Ticker) {
+    console.log("update snake", this.#direction, this.#speed);
+    const movementAxis = ["Left", "Right"].includes(this.#direction)
+      ? "x"
+      : "y";
+
+    const operator = ["Left", "Up"].includes(this.#direction) ? -1 : 1;
+    this.#graphic[movementAxis] += this.#speed * time.deltaTime * operator;
   }
 }
