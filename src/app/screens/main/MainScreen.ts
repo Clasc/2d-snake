@@ -11,9 +11,9 @@ import { COLOR } from "../../colors/scheme";
 export class MainScreen extends Container {
   /** Assets bundles required by this screen */
   public static assetBundles = ["main"];
-  private pauseButton: FancyButton;
+  #pauseButton: FancyButton;
   public mainContainer: Container;
-  private paused = false;
+  #paused = false;
 
   constructor() {
     super();
@@ -21,36 +21,36 @@ export class MainScreen extends Container {
     this.addChild(this.mainContainer);
     this.mainContainer.addChild(new Snake());
     this.mainContainer.addChild(new Fruit());
-    this.pauseButton = new FancyButton({
+    this.#pauseButton = new FancyButton({
       text: new Text({
         text: "🛑",
         style: { fontSize: 40, fill: COLOR.FONT_MAIN },
       }),
     });
 
-    this.addChild(this.pauseButton);
+    this.addChild(this.#pauseButton);
   }
 
   /** Prepare the screen just before showing */
   public prepare() {
-    this.pauseButton.onPress.connect(() => this.pause());
+    this.#pauseButton.onPress.connect(() => this.pause());
   }
 
   /** Update the screen */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public update(_time: Ticker) {
-    if (this.paused) return;
+    if (this.#paused) return;
   }
 
   public async pause() {
     this.mainContainer.interactiveChildren = false;
-    this.paused = !this.paused;
+    this.#paused = !this.#paused;
   }
 
   /** Resume gameplay */
   public async resume() {
     this.mainContainer.interactiveChildren = true;
-    this.paused = false;
+    this.#paused = false;
   }
 
   /** Fully reset */
@@ -63,15 +63,15 @@ export class MainScreen extends Container {
 
     this.mainContainer.x = centerX;
     this.mainContainer.y = centerY;
-    this.pauseButton.x = 30;
-    this.pauseButton.y = 30;
+    this.#pauseButton.x = 30;
+    this.#pauseButton.y = 30;
   }
 
   /** Show screen with animations */
   public async show(): Promise<void> {
     engine().audio.bgm.play("main/sounds/bgm-main.mp3", { volume: 0.5 });
 
-    const elementsToAnimate = [this.pauseButton];
+    const elementsToAnimate = [this.#pauseButton];
     for (const element of elementsToAnimate) {
       element.alpha = 0;
       animate(
