@@ -24,28 +24,4 @@ setEngine(engine);
   //userSettings.init();
   //await engine.navigation.showScreen(LoadScreen);
   await engine.navigation.showScreen(MainScreen);
-  Snake(engine);
 })();
-
-function Snake(engine: CreationEngine) {
-  const graphics = new Graphics();
-  graphics.rect(500, 500, 30, 30);
-  graphics.fill(0xd3249);
-  engine.stage.addChild(graphics);
-  const movementSpeed = graphics.width / 2;
-  registerKeyboardEvent({
-    Up: () => {
-      graphics.y -= movementSpeed;
-    },
-    Left: () => {
-      graphics.x -= movementSpeed;
-    },
-    Right: () => {
-      console.log(graphics.x);
-      graphics.x += movementSpeed;
-    },
-    Down: () => {
-      graphics.y += movementSpeed;
-    },
-  });
-}

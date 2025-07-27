@@ -4,6 +4,7 @@ import type { Ticker } from "pixi.js";
 import { Container } from "pixi.js";
 
 import { engine } from "../../getEngine";
+import { Snake } from "../../characters/snake";
 
 /** The screen that holds the app */
 export class MainScreen extends Container {
@@ -17,7 +18,7 @@ export class MainScreen extends Container {
     super();
     this.mainContainer = new Container();
     this.addChild(this.mainContainer);
-
+    Snake(this.mainContainer);
     this.pauseButton = new FancyButton({
       text: "Pause",
     });
@@ -31,7 +32,6 @@ export class MainScreen extends Container {
   }
 
   /** Update the screen */
-
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public update(_time: Ticker) {
     if (this.paused) return;
@@ -40,7 +40,6 @@ export class MainScreen extends Container {
   public async pause() {
     this.mainContainer.interactiveChildren = false;
     this.paused = !this.paused;
-    console.log(this.paused ? "pause" : "play");
   }
 
   /** Resume gameplay */
