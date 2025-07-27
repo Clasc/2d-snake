@@ -28,15 +28,15 @@ export class MainScreen extends Container {
         style: { fontSize: 40, fill: COLOR.FONT_MAIN },
       }),
     });
-    registerKeyboardEvent({
-      Esc: () => this.pause(),
-    });
     this.addChild(this.#pauseButton);
   }
 
   /** Prepare the screen just before showing */
   public prepare() {
     this.#pauseButton.onPress.connect(() => this.pause());
+    registerKeyboardEvent({
+      Esc: () => this.pause(),
+    });
   }
 
   /** Update the screen */
