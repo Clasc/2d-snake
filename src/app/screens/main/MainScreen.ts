@@ -1,10 +1,11 @@
 import { FancyButton } from "@pixi/ui";
 import { animate } from "motion";
 import type { Ticker } from "pixi.js";
-import { Container } from "pixi.js";
+import { Container, Text } from "pixi.js";
 import { engine } from "../../getEngine";
 import { Snake } from "../../characters/snake";
 import { Fruit } from "../../objects/fruit";
+import { COLOR } from "../../colors/scheme";
 
 /** The screen that holds the app */
 export class MainScreen extends Container {
@@ -21,7 +22,10 @@ export class MainScreen extends Container {
     Snake(this.mainContainer);
     Fruit(this.mainContainer);
     this.pauseButton = new FancyButton({
-      text: "Pause",
+      text: new Text({
+        text: "🛑",
+        style: { fontSize: 40, fill: COLOR.FONT_MAIN },
+      }),
     });
 
     this.addChild(this.pauseButton);
