@@ -19,8 +19,8 @@ export class MainScreen extends Container {
     super();
     this.mainContainer = new Container();
     this.addChild(this.mainContainer);
-    Snake(this.mainContainer);
-    Fruit(this.mainContainer);
+    this.mainContainer.addChild(new Snake());
+    this.mainContainer.addChild(new Fruit());
     this.pauseButton = new FancyButton({
       text: new Text({
         text: "🛑",
