@@ -7,6 +7,7 @@ export class Snake extends Container {
   #speed = 0;
   #direction: Direction = "Right";
   #graphic: Graphics;
+
   public constructor() {
     super();
     this.#graphic = new Graphics();
@@ -15,13 +16,28 @@ export class Snake extends Container {
     this.addChild(this.#graphic);
     this.#speed = this.#graphic.width / 6;
     registerKeyboardEvent({
-      Up: () => (this.#direction = "Up"),
-      Left: () => (this.#direction = "Left"),
-      Right: () => (this.#direction = "Right"),
-      Down: () => (this.#direction = "Down"),
+      Up: () => this.#setDirection("Up"),
+      Left: () => this.#setDirection("Left"),
+      Right: () => this.#setDirection("Right"),
+      Down: () => this.#setDirection("Down"),
     });
   }
 
+  #setDirection(newDirection: Direction) {
+    if (
+      (this.#direction === "Up" && newDirection === "Down") ||
+      (this.#direction === "Down" && newDirection === "Up")
+    ) {
+      return;
+    }
+    if (
+      (this.#direction === "Left" && newDirection === "Right") ||
+      (this.#direction === "Right" && newDirection === "Left")
+    ) {
+      return;
+    }
+    this.#direction = newDirection;
+  }
   public update(time: Ticker) {
     console.log("update snake", this.#direction, this.#speed);
     const movementAxis = ["Left", "Right"].includes(this.#direction)
