@@ -7,13 +7,14 @@ const keyMap = Object.freeze({
   37: "Left",
   68: "D",
   39: "Right",
+  27: "Esc",
 });
 type KeyCode = keyof typeof keyMap;
 type Keys = (typeof keyMap)[KeyCode];
 export function registerKeyboardEvent(
   event: Partial<Record<Keys, () => void>>,
 ) {
-  document.addEventListener("keydown", (key) =>
-    event[keyMap[key.keyCode as KeyCode]]?.(),
-  );
+  document.addEventListener("keydown", (key) => {
+    event[keyMap[key.keyCode as KeyCode]]?.();
+  });
 }

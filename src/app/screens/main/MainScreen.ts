@@ -6,6 +6,7 @@ import { engine } from "../../getEngine";
 import { Snake } from "../../characters/snake";
 import { Fruit } from "../../objects/fruit";
 import { COLOR } from "../../colors/scheme";
+import { registerKeyboardEvent } from "../../../engine/keyboard/keyboard";
 
 /** The screen that holds the app */
 export class MainScreen extends Container {
@@ -28,7 +29,9 @@ export class MainScreen extends Container {
         style: { fontSize: 40, fill: COLOR.FONT_MAIN },
       }),
     });
-
+    registerKeyboardEvent({
+      Esc: () => this.pause(),
+    });
     this.addChild(this.#pauseButton);
   }
 
